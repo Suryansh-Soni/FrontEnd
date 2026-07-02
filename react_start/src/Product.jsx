@@ -8,10 +8,7 @@ function Product(props) {
 
   return (
     <div style={style}>
-      <h2>{props.title}</h2>
-      <p>${props.price.toFixed(2)}</p>
-      <p>{props.description}</p>
-      {props.price > 20 && <p>This product is expensive</p>}
+      <p>product</p>
     </div>
   );
 }
