@@ -1,15 +1,14 @@
 import "./App.css";
-import Title from "./Title";
 import PdtTab from "./PdtTab";
-import MsgBox from "./MsgBox";
+import Btn from "./Btn";
+import Form from"./Form";
 function App() {
   return (
     <>
-      <Title />
+      <Form />
       <PdtTab />
-      <MsgBox userName="John" testColor="blue" />
-      </>
-    
+      <Btn />
+    </>
   );
 }
 
