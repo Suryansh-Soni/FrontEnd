@@ -1,68 +1,57 @@
-import { useState } from "react";
+import { Formik, Form, Field } from "formik";
 
 export default function CommentsForm({ addNewCmnt }) {
-  const [formData, setFormData] = useState({
-    username: "",
-    remarks: "",
-    rating: 5,
-  });
-
-  const handleChanges = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    addNewCmnt(formData);
-
-    setFormData({
-      username: "",
-      remarks: "",
-      rating: 5,
-    });
-  };
-
   return (
     <div>
       <h4>Give me a Comment!</h4>
 
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="username">Username:</label>
-        <input
-          type="text"
-          value={formData.username}
-          name="username"
-          onChange={handleChanges}
-          placeholder="Your name here"
-          id="username"
-        />
+      <Formik
+        initialValues={{
+          username: "",
+          remarks: "",
+          rating: 5,
+        }}
+        onSubmit={(values, { resetForm }) => {
+          addNewCmnt(values);
+          resetForm();
+        }}
+      >
+        <Form>
+          <label htmlFor="username">Username:</label>
+          <Field
+            type="text"
+            name="username"
+            id="username"
+            placeholder="Your name here"
+          />
 
-        <br />
+          <br />
 
-        <label htmlFor="remarks">Remarks:</label>
-        <textarea
-          name="remarks"
-          id="remarks"
-          value={formData.remarks}
-          placeholder="Your remarks here"
-          onChange={handleChanges}
-        />
+          <label htmlFor="remarks">Remarks:</label>
+          <Field
+            as="textarea"
+            name="remarks"
+            id="remarks"
+            placeholder="Your remarks here"
+          />
 
-        <br />
+          <br />
 
-        <label htmlFor="rating">Rating:</label>
-        <input
-          placeholder="Ratings (1-5)"
-          type="number"
-          name="rating"
-          min="1"
-          max="5"
-          value={formData.rating}
-          onChange={handleChanges}
-        />
+          <label htmlFor="rating">Rating:</label>
+          <Field
+            type="number"
+            name="rating"
+            id="rating"
+            min="1"
+            max="5"
+            placeholder="Ratings (1-5)"
+          />
 
-        <button>Comment</button>
-      </form>
+          <br />
+
+          <button type="submit">Comment</button>
+        </Form>
+      </Formik>
     </div>
   );
 }
