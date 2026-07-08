@@ -1,7 +1,7 @@
 import Comment from "./Comment.jsx";
-
+import Joker from "./Joker.jsx"
 function App() {
-  return <Comment />;
+  return <Joker/>;
 }
 
 export default App;
