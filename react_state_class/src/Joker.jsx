@@ -5,15 +5,19 @@ export default function Joker() {
 
   let getJoke = async () => {
     let url = "https://official-joke-api.appspot.com/random_joke";
-    let res = fetch(url);
-    let jsonResp = res.json();
+    let res = await fetch(url);
+    let jsonResp = await res.json();
     setJoke({ setup: jsonResp.setup, punchline: jsonResp.punchline });
   };
 
   useEffect(() => {
-    let res = fetch(url);
-    let jsonResp = res.json();
-    setJoke({ setup: jsonResp.setup, punchline: jsonResp.punchline });
+    async function getFirstJoke() {
+      let url = "https://official-joke-api.appspot.com/random_joke";
+      let res = await fetch(url);
+      let jsonResp = await res.json();
+      setJoke({ setup: jsonResp.setup, punchline: jsonResp.punchline });
+    }
+    getFirstJoke();
   }, []);
 
   return (
