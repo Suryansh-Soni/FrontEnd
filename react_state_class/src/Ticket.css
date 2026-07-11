@@ -1,0 +1,48 @@
+.ticket-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.ticket-ball {
+  width: 76px;
+  height: 76px;
+  display: grid;
+  place-items: center;
+  border: 5px solid rgba(255, 255, 255, 0.28);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 30% 25%,
+    #ffffff,
+    #ddd6fe 35%,
+    #8b5cf6 75%
+  );
+  color: #312e81;
+  font-size: 28px;
+  font-weight: 900;
+  box-shadow:
+    inset -10px -12px 20px rgba(49, 46, 129, 0.25),
+    0 12px 25px rgba(0, 0, 0, 0.25);
+  animation: ticketEnter 0.45s ease;
+}
+
+@keyframes ticketEnter {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.85);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 480px) {
+  .ticket-ball {
+    width: 62px;
+    height: 62px;
+    font-size: 23px;
+  }
+}

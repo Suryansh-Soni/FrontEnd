@@ -1,8 +1,12 @@
-import Comment from "./Comment.jsx";
-import Joker from "./Joker.jsx";
-import TodoList from "./Todolist.jsx";
+import Lottery from "./Lottery.jsx";
+import { sum } from "./helper.js";
+
 function App() {
-  return <TodoList />;
+  const winCondition = (ticket) => {
+    return sum(ticket) === 15;
+  };
+
+  return <Lottery n={3} winCondition={winCondition} />;
 }
 
 export default App;
