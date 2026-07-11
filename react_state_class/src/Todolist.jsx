@@ -1,86 +1,129 @@
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import "./TodoList.css";
 
 export default function TodoList() {
   const [task, setTask] = useState([
-    { task: "any", id: uuidv4(), isCompleted: false },
+    { task: "Learn React", id: uuidv4(), isCompleted: false },
   ]);
+
   const [newTodo, setNewTodo] = useState("");
 
-  let addTask = () => {
+  const addTask = () => {
     if (!newTodo.trim()) return;
 
     setTask((prev) => [
       ...prev,
-      { task: newTodo, id: uuidv4(), isCompleted: false },
+      {
+        task: newTodo,
+        id: uuidv4(),
+        isCompleted: false,
+      },
     ]);
+
     setNewTodo("");
   };
 
-  let updateTodo = (e) => {
+  const updateTodo = (e) => {
     setNewTodo(e.target.value);
   };
 
-  let deleteTask = (id) => {
-    setTask(() => task.filter((item) => item.id !== id));
+  const deleteTask = (id) => {
+    setTask((prev) => prev.filter((item) => item.id !== id));
   };
-  let UpdatedAllTask = () => {
-    setTask(
-      task.map((prev) => {
-        return { ...prev, task: prev.task.toUpperCase() };
-      }),
+
+  const updatedAllTask = () => {
+    setTask((prev) =>
+      prev.map((item) => ({
+        ...item,
+        task: item.task.toUpperCase(),
+      })),
     );
   };
 
-  let UpdateTask = (id) => {
-    setTask(
-      task.map((prev) => {
-        if (prev.id == id) {
-          return { ...prev, task: prev.task.toUpperCase() };
-        } else {
-          return prev;
-        }
-      }),
+  const updateTask = (id) => {
+    setTask((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, task: item.task.toUpperCase() } : item,
+      ),
     );
   };
 
-  let toggleTaskCompletion = (id) => {
-    setTask(
-      task.map((prev) => {
-        if (prev.id == id) {
-          return { ...prev, isCompleted: !prev.isCompleted };
-        } else {
-          return prev;
-        }
-      }),
+  const toggleTaskCompletion = (id) => {
+    setTask((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, isCompleted: !item.isCompleted } : item,
+      ),
     );
   };
 
   return (
-    <>
+    <div className="todo-container">
       <h1>Todo List</h1>
-      <input type="text" onChange={updateTodo} value={newTodo} />
-      <button onClick={addTask}>Add Task</button>
+      <p className="subtitle">Organize your tasks and stay productive.</p>
 
-      <ul>
-        {task.map((task) => (
+      <div className="input-container">
+        <input
+          type="text"
+          onChange={updateTodo}
+          value={newTodo}
+          placeholder="Enter a new task..."
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              addTask();
+            }
+          }}
+        />
+
+        <button className="add-btn" onClick={addTask}>
+          Add Task
+        </button>
+      </div>
+
+      <ul className="todo-list">
+        {task.map((item) => (
           <li
-            key={task.id}
-            style={{ textDecoration: task.isCompleted ? "line-through" : "" }}
+            key={item.id}
+            className={item.isCompleted ? "completed todo-item" : "todo-item"}
           >
-            <input
-              type="checkbox"
-              checked={task.isCompleted}
-              onChange={() => toggleTaskCompletion(task.id)}
-            />
-            {task.task}
-            &nbsp;&nbsp;
-            <button onClick={() => deleteTask(task.id)}>Delete task</button>
-            <button onClick={() => UpdateTask(task.id)}>Update task</button>
+            <div className="task-content">
+              <input
+                type="checkbox"
+                checked={item.isCompleted}
+                onChange={() => toggleTaskCompletion(item.id)}
+              />
+
+              <span>{item.task}</span>
+            </div>
+
+            <div className="button-group">
+              <button
+                className="update-btn"
+                onClick={() => updateTask(item.id)}
+              >
+                Uppercase
+              </button>
+
+              <button
+                className="delete-btn"
+                onClick={() => deleteTask(item.id)}
+              >
+                Delete
+              </button>
+            </div>
           </li>
         ))}
       </ul>
-      <button onClick={UpdatedAllTask}>to Upper Case </button>
-    </>
+
+      {task.length === 0 && (
+        <p className="empty-message">No tasks available. Add a new task.</p>
+      )}
+
+      {task.length > 0 && (
+        <button className="uppercase-all-btn" onClick={updatedAllTask}>
+          Convert All to Uppercase
+        </button>
+      )}
+    </div>
   );
 }

@@ -15,7 +15,10 @@ export default function CommentsForm({ addNewCmnt }) {
 
   return (
     <div>
-      <h4>Give me a Comment!</h4>
+      <h2>
+        <b>Write your Comment!</b>
+      </h2>
+      <br />
 
       <form onSubmit={formik.handleSubmit}>
         <label htmlFor="username">Username:</label>

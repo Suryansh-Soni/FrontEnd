@@ -4,8 +4,8 @@ import CommentsForm from "./CommentsForm.jsx";
 export default function Comment() {
   const [comments, setComments] = useState([
     {
-      username: "Guest",
-      remarks: "hello ji s",
+      username: "Suryansh",
+      remarks: "Great stay",
       rating: 5,
     },
   ]);
@@ -16,20 +16,26 @@ export default function Comment() {
 
   return (
     <div>
-      <h3>All Comments</h3>
+      <div style={{ border: "2px solid grey", padding: "10px" }}>
+        <CommentsForm addNewCmnt={addNewCmnt} />
+      </div>
 
+      <h3>
+        <u>All Comments</u>
+      </h3>
       <div className="comment">
         {comments.map((comment, index) => (
-          <div className="comments" key={index}>
+          <div
+            className="comments"
+            key={index}
+            style={{ border: "2px dashed darkgray" }}
+          >
             <p>{comment.remarks}</p>
             <p>Rating: {comment.rating}</p>
             <p>By: {comment.username}</p>
+            <br />
           </div>
         ))}
-      </div>
-
-      <div style={{ border: "2px solid red", padding: "10px" }}>
-        <CommentsForm addNewCmnt={addNewCmnt} />
       </div>
     </div>
   );
